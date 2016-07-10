@@ -30,17 +30,13 @@ namespace ChocoEdit
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.NumericUpDown weapon_hi;
-		private System.Windows.Forms.NumericUpDown weapon_lo;
-		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.NumericUpDown hp_max;
 		private System.Windows.Forms.NumericUpDown hp_curr;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.NumericUpDown id_lo;
-		private System.Windows.Forms.NumericUpDown id_hi;
+		private System.Windows.Forms.NumericUpDown ID;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.NumericUpDown powerups;
@@ -59,6 +55,9 @@ namespace ChocoEdit
 		private System.Windows.Forms.CheckBox mogu_standby;
 		private System.Windows.Forms.CheckBox mogu_have;
 		private System.Windows.Forms.CheckBox mogu_found;
+		private System.Windows.Forms.NumericUpDown weapon;
+		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.Label label10;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -99,19 +98,16 @@ namespace ChocoEdit
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.weapon_hi = new System.Windows.Forms.NumericUpDown();
-			this.weapon_lo = new System.Windows.Forms.NumericUpDown();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.hp_max = new System.Windows.Forms.NumericUpDown();
 			this.hp_curr = new System.Windows.Forms.NumericUpDown();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.about_rank = new System.Windows.Forms.Button();
-			this.id_lo = new System.Windows.Forms.NumericUpDown();
-			this.id_hi = new System.Windows.Forms.NumericUpDown();
+			this.label12 = new System.Windows.Forms.Label();
+			this.ID = new System.Windows.Forms.NumericUpDown();
 			this.label9 = new System.Windows.Forms.Label();
+			this.about_rank = new System.Windows.Forms.Button();
 			this.label8 = new System.Windows.Forms.Label();
 			this.powerups = new System.Windows.Forms.NumericUpDown();
 			this.label11 = new System.Windows.Forms.Label();
@@ -125,6 +121,8 @@ namespace ChocoEdit
 			this.mogu_standby = new System.Windows.Forms.CheckBox();
 			this.mogu_have = new System.Windows.Forms.CheckBox();
 			this.mogu_found = new System.Windows.Forms.CheckBox();
+			this.weapon = new System.Windows.Forms.NumericUpDown();
+			this.label10 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.level)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.rank)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.item_a)).BeginInit();
@@ -132,17 +130,14 @@ namespace ChocoEdit
 			((System.ComponentModel.ISupportInitialize)(this.item_d)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.item_c)).BeginInit();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.weapon_hi)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.weapon_lo)).BeginInit();
-			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.hp_max)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.hp_curr)).BeginInit();
 			this.groupBox4.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.id_lo)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.id_hi)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.ID)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.powerups)).BeginInit();
 			this.groupBox5.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.weapon)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// loadsave_but
@@ -237,7 +232,7 @@ namespace ChocoEdit
 			// 
 			// rank
 			// 
-			this.rank.Location = new System.Drawing.Point(60, 44);
+			this.rank.Location = new System.Drawing.Point(58, 19);
 			this.rank.Maximum = new decimal(new int[] {
 			6,
 			0,
@@ -305,7 +300,7 @@ namespace ChocoEdit
 			this.groupBox1.Controls.Add(this.item_d);
 			this.groupBox1.Controls.Add(this.item_b);
 			this.groupBox1.Controls.Add(this.item_a);
-			this.groupBox1.Location = new System.Drawing.Point(400, 113);
+			this.groupBox1.Location = new System.Drawing.Point(400, 111);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(138, 107);
 			this.groupBox1.TabIndex = 24;
@@ -348,41 +343,6 @@ namespace ChocoEdit
 			this.label2.Text = "A";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// weapon_hi
-			// 
-			this.weapon_hi.Location = new System.Drawing.Point(6, 22);
-			this.weapon_hi.Maximum = new decimal(new int[] {
-			99,
-			0,
-			0,
-			0});
-			this.weapon_hi.Name = "weapon_hi";
-			this.weapon_hi.Size = new System.Drawing.Size(44, 20);
-			this.weapon_hi.TabIndex = 25;
-			// 
-			// weapon_lo
-			// 
-			this.weapon_lo.Location = new System.Drawing.Point(63, 22);
-			this.weapon_lo.Maximum = new decimal(new int[] {
-			99,
-			0,
-			0,
-			0});
-			this.weapon_lo.Name = "weapon_lo";
-			this.weapon_lo.Size = new System.Drawing.Size(44, 20);
-			this.weapon_lo.TabIndex = 26;
-			// 
-			// groupBox2
-			// 
-			this.groupBox2.Controls.Add(this.weapon_lo);
-			this.groupBox2.Controls.Add(this.weapon_hi);
-			this.groupBox2.Location = new System.Drawing.Point(30, 166);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(114, 48);
-			this.groupBox2.TabIndex = 27;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Weapon";
-			// 
 			// groupBox3
 			// 
 			this.groupBox3.Controls.Add(this.hp_max);
@@ -410,7 +370,6 @@ namespace ChocoEdit
 			0,
 			0});
 			this.hp_max.Name = "hp_max";
-			this.hp_max.ReadOnly = true;
 			this.hp_max.Size = new System.Drawing.Size(44, 20);
 			this.hp_max.TabIndex = 31;
 			this.hp_max.Value = new decimal(new int[] {
@@ -418,6 +377,7 @@ namespace ChocoEdit
 			0,
 			0,
 			0});
+			this.hp_max.ValueChanged += new System.EventHandler(this.Hp_maxValueChanged);
 			// 
 			// hp_curr
 			// 
@@ -462,60 +422,56 @@ namespace ChocoEdit
 			// 
 			// groupBox4
 			// 
-			this.groupBox4.Controls.Add(this.about_rank);
-			this.groupBox4.Controls.Add(this.id_lo);
-			this.groupBox4.Controls.Add(this.id_hi);
+			this.groupBox4.Controls.Add(this.label12);
+			this.groupBox4.Controls.Add(this.ID);
 			this.groupBox4.Controls.Add(this.label9);
 			this.groupBox4.Controls.Add(this.rank);
 			this.groupBox4.Location = new System.Drawing.Point(271, 111);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(114, 109);
+			this.groupBox4.Size = new System.Drawing.Size(114, 78);
 			this.groupBox4.TabIndex = 28;
 			this.groupBox4.TabStop = false;
-			this.groupBox4.Text = "ID";
+			this.groupBox4.Text = "Rank and ID";
 			// 
-			// about_rank
+			// label12
 			// 
-			this.about_rank.Location = new System.Drawing.Point(6, 68);
-			this.about_rank.Name = "about_rank";
-			this.about_rank.Size = new System.Drawing.Size(102, 35);
-			this.about_rank.TabIndex = 34;
-			this.about_rank.Text = "About Rank and ID";
-			this.about_rank.UseVisualStyleBackColor = true;
-			this.about_rank.Click += new System.EventHandler(this.About_rankClick);
+			this.label12.Location = new System.Drawing.Point(7, 42);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(45, 23);
+			this.label12.TabIndex = 35;
+			this.label12.Text = "ID:";
+			this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// id_lo
+			// ID
 			// 
-			this.id_lo.Location = new System.Drawing.Point(60, 19);
-			this.id_lo.Maximum = new decimal(new int[] {
-			99,
+			this.ID.Location = new System.Drawing.Point(58, 45);
+			this.ID.Maximum = new decimal(new int[] {
+			999,
 			0,
 			0,
 			0});
-			this.id_lo.Name = "id_lo";
-			this.id_lo.Size = new System.Drawing.Size(44, 20);
-			this.id_lo.TabIndex = 26;
-			// 
-			// id_hi
-			// 
-			this.id_hi.Location = new System.Drawing.Point(10, 19);
-			this.id_hi.Maximum = new decimal(new int[] {
-			9,
-			0,
-			0,
-			0});
-			this.id_hi.Name = "id_hi";
-			this.id_hi.Size = new System.Drawing.Size(44, 20);
-			this.id_hi.TabIndex = 25;
+			this.ID.Name = "ID";
+			this.ID.Size = new System.Drawing.Size(44, 20);
+			this.ID.TabIndex = 25;
 			// 
 			// label9
 			// 
-			this.label9.Location = new System.Drawing.Point(9, 42);
+			this.label9.Location = new System.Drawing.Point(7, 17);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(45, 23);
 			this.label9.TabIndex = 30;
 			this.label9.Text = "Rank:";
 			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// about_rank
+			// 
+			this.about_rank.Location = new System.Drawing.Point(150, 195);
+			this.about_rank.Name = "about_rank";
+			this.about_rank.Size = new System.Drawing.Size(235, 24);
+			this.about_rank.TabIndex = 34;
+			this.about_rank.Text = "About Rank, ID and Max HP";
+			this.about_rank.UseVisualStyleBackColor = true;
+			this.about_rank.Click += new System.EventHandler(this.About_rankClick);
 			// 
 			// label8
 			// 
@@ -558,7 +514,7 @@ namespace ChocoEdit
 			this.groupBox5.Controls.Add(this.mogu_standby);
 			this.groupBox5.Controls.Add(this.mogu_have);
 			this.groupBox5.Controls.Add(this.mogu_found);
-			this.groupBox5.Location = new System.Drawing.Point(12, 220);
+			this.groupBox5.Location = new System.Drawing.Point(82, 224);
 			this.groupBox5.Name = "groupBox5";
 			this.groupBox5.Size = new System.Drawing.Size(373, 100);
 			this.groupBox5.TabIndex = 34;
@@ -649,19 +605,42 @@ namespace ChocoEdit
 			this.mogu_found.Text = "Mogu found";
 			this.mogu_found.UseVisualStyleBackColor = true;
 			// 
+			// weapon
+			// 
+			this.weapon.Location = new System.Drawing.Point(100, 166);
+			this.weapon.Maximum = new decimal(new int[] {
+			9999,
+			0,
+			0,
+			0});
+			this.weapon.Name = "weapon";
+			this.weapon.Size = new System.Drawing.Size(45, 20);
+			this.weapon.TabIndex = 27;
+			// 
+			// label10
+			// 
+			this.label10.Location = new System.Drawing.Point(32, 163);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(62, 23);
+			this.label10.TabIndex = 35;
+			this.label10.Text = "Weapon:";
+			this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
 			// MainForm
 			// 
 			this.AllowDrop = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(544, 345);
+			this.Controls.Add(this.label10);
+			this.Controls.Add(this.about_rank);
+			this.Controls.Add(this.weapon);
 			this.Controls.Add(this.groupBox5);
 			this.Controls.Add(this.label11);
 			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.powerups);
 			this.Controls.Add(this.label8);
 			this.Controls.Add(this.groupBox3);
-			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.level);
 			this.Controls.Add(this.label1);
@@ -684,17 +663,14 @@ namespace ChocoEdit
 			((System.ComponentModel.ISupportInitialize)(this.item_d)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.item_c)).EndInit();
 			this.groupBox1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.weapon_hi)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.weapon_lo)).EndInit();
-			this.groupBox2.ResumeLayout(false);
 			this.groupBox3.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.hp_max)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.hp_curr)).EndInit();
 			this.groupBox4.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.id_lo)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.id_hi)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.ID)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.powerups)).EndInit();
 			this.groupBox5.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.weapon)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

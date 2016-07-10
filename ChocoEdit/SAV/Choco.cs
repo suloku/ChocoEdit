@@ -105,7 +105,7 @@ namespace ChocoEdit
 	        		if (value > 99 ) Data[save_offset+3] = DecimalAsHex(99); else Data[save_offset+3] = DecimalAsHex(value);
 	        	}
 	        }
-	        public int weapon_last{
+	        private int weapon_last{
 	        	get{
 	        		return ReadAsDecimal(Data[save_offset+4]);
 	        	}
@@ -113,12 +113,21 @@ namespace ChocoEdit
 	        		if (value > 99 ) Data[save_offset+4] = DecimalAsHex(99); else Data[save_offset+4] = DecimalAsHex(value);
 	        	}
 	        }
-	        public int weapon_first{
+	        private int weapon_first{
 	        	get{
 	        		return ReadAsDecimal(Data[save_offset+5]);
 	        	}
 	        	set{
 	        		if (value > 99 ) Data[save_offset+5] = DecimalAsHex(99); else Data[save_offset+5] = DecimalAsHex(value);
+	        	}
+	        }
+	        public int weapon{
+	        	get{
+	        		return (weapon_first*100) + weapon_last;
+	        	}
+	        	set{
+	        		weapon_last = value - (value/100)*100;
+	        		weapon_first = value/100;
 	        	}
 	        }
 	        public int rank{
@@ -145,7 +154,7 @@ namespace ChocoEdit
 	        		setData(BitConverter.GetBytes(value).ToArray(), save_offset + 8);
 	        	}
 	        }
-	        public int ID_low{
+	        private int ID_low{
 	        	get{
 	        		return ReadAsDecimal(Data[save_offset+0xC]);
 	        	}
@@ -153,12 +162,21 @@ namespace ChocoEdit
 	        		if (value > 99 ) Data[save_offset+0xC] = DecimalAsHex(99); else Data[save_offset+0xC] = DecimalAsHex(value);
 	        	}
 	        }
-	        public int ID_HI{
+	        private int ID_HI{
 	        	get{
 	        		return ReadAsDecimal(Data[save_offset+0xD]);
 	        	}
 	        	set{
 	        		if (value > 9 ) Data[save_offset+0xD] |= DecimalAsHex(9); else Data[save_offset+0xD] |= DecimalAsHex(value);
+	        	}
+	        }
+			public int ID{
+	        	get{
+	        		return (ID_HI*100) + ID_low;
+	        	}
+	        	set{
+	        		ID_low = value - (value/100)*100;
+	        		ID_HI = value/100;
 	        	}
 	        }
 	        public int ITEM_A{

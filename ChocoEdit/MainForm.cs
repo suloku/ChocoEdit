@@ -90,17 +90,17 @@ namespace ChocoEdit
 		}
 		void load_data()
 		{
-			hp_curr.Value = save.HP_cur;
 			hp_max.Value = save.HP_max;
+			hp_curr.Value = save.HP_cur;
 			
 			level.Value = save.level;
 			rank.Value = save.rank;
 			powerups.Value = save.Powerups;
 			
-			weapon_hi.Value = save.weapon_first;
-			weapon_lo.Value = save.weapon_last;
-			id_hi.Value = save.ID_HI;
-			id_lo.Value = save.ID_low;
+			//weapon_hi.Value = save.weapon_first;
+			//weapon_lo.Value = save.weapon_last;
+			weapon.Value = save.weapon;
+			ID.Value = save.ID;
 			
 			ff8_id.Text = save.FF8ID.ToString("X");
 			
@@ -121,17 +121,15 @@ namespace ChocoEdit
 		}
 		void save_data()
 		{
+			save.HP_max = (int)hp_max.Value;
 			save.HP_cur = (int)hp_curr.Value;
-			//save.HP_max = (int)hp_max.Value;
 			
 			save.level = (int)level.Value;
 		 	save.rank = (int)rank.Value;
 			save.Powerups = (int)powerups.Value;
 			
-			save.weapon_first = (int)weapon_hi.Value;
-			save.weapon_last = (int)weapon_lo.Value;
-			save.ID_HI = (int)id_hi.Value;
-			save.ID_low = (int)id_lo.Value;
+			save.weapon = (int)weapon.Value;
+			save.ID = (int)ID.Value;
 			
 			//ff8_id.Text = save.FF8ID.ToString("X");
 			
@@ -156,7 +154,7 @@ namespace ChocoEdit
 		}
 		void Hp_currValueChanged(object sender, EventArgs e)
 		{
-			if (hp_curr.Value > save.HP_max) hp_curr.Value = save.HP_max;
+			if (hp_curr.Value > hp_max.Value) hp_curr.Value = hp_max.Value;
 		}
 		void Ff8id_setClick(object sender, EventArgs e)
 		{
@@ -187,16 +185,21 @@ namespace ChocoEdit
 				"\n--03-----34-----9888-------3%--10%--37%--50%-----9---Ending-in-00"+
 				"\n--04-----33-----9698-------2%--10%--28%--60%-----9---Ending-in-77"+
 				"\n--05-----32-----9698-------0%?--5%--25%--70%----90---Ending-in-7"+
-				"\n--06-----31-----9698?------0%---5%--15%--80%---880---Any-other-number"
+				"\n--06-----31-----9698?------0%---5%--15%--80%---880---Any-other-number"+
+				"\n\nMax. HP is automatically set when you advance a level (so even if it is set to 99, after level up it will be set depending on rank)"
 			);
 		}
 		void About_flagsClick(object sender, EventArgs e)
 		{
 			MessageBox.Show("About Level event happened:\n"
-				+"Events happen at level 20, 50 (Boko PowerUp), 75, 100. I guess it is unset after every level up. Needs to be set to be able to battle the Demon King at level 100 (and Demon King defeated flag needs to be unset)"
+				+"Events happen at level 20, 50 (Boko PowerUp), 75, 100. I guess it is unset after every level up. Needs to be re-set to be able to battle the Demon King at level 100 (and Demon King defeated flag needs to be unset)"
 				+"\n\nAbout Mogu found flag:"
 				+"\nIn normal gameplay you can only encounter Mogu after reaching level 10. If you set this before level 10 you can encounter mogu even at level 1."
 			);
+		}
+		void Hp_maxValueChanged(object sender, EventArgs e)
+		{
+	
 		}
 	}
 }
