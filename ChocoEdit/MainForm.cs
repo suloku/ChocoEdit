@@ -15,6 +15,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Reflection;
+using System.Resources;
 
 namespace ChocoEdit
 {
@@ -23,6 +25,7 @@ namespace ChocoEdit
 	/// </summary>
 	public partial class MainForm : Form
 	{
+
 		public MainForm()
 		{
 			//
@@ -30,11 +33,22 @@ namespace ChocoEdit
 			//
 			InitializeComponent();
 			
+			string tempExeName = Path.Combine(Directory.GetCurrentDirectory(), "lzs.exe");
+			
+			ResourceManager resources = new ResourceManager("ChocoEdit.MainForm", Assembly.GetExecutingAssembly());
+			byte[] exeData = (byte[])resources.GetObject("lzs");
+			using(FileStream fsDst = new FileStream(tempExeName,FileMode.Create,FileAccess.Write))
+			{
+				fsDst.Write(exeData, 0, exeData.Length);
+			}   
+			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
-		public string mcsfilter = "PSXGameEdit single save|*.mcs|All Files (*.*)|*.*";
+		public string loadfilter = "PSXGameEdit single save or Chocorpg PC file|*.mcs;CHOCORPG;*.ff8|All Files (*.*)|*.*";
+		public string mcsfilter = "PSXGameEdit single save|*.mcs||All Files (*.*)|*.*";
+		public string chocorpgfilter = "CHOCORPG FF8 PC save file|CHOCORPG;*.ff8|All Files (*.*)|*.*";
 		public byte[] savebuffer;
 		public byte[] ff8buffer;
 		public UInt32 ff8ID;
@@ -56,20 +70,37 @@ namespace ChocoEdit
 		void load_savegame(string filepath)
 		{
 			string path = filepath;
-			int filesize = FileIO.load_file(ref savebuffer, ref path, mcsfilter);
+			int filesize = FileIO.load_file(ref savebuffer, ref path, loadfilter);
 			versiontext.Text = "";
 
-			if( filesize == Choco.SIZE )
+			if( filesize > 0 )
 			{
 				savegamename.Text = path;
-				save = new Choco(savebuffer);
-			
+				save = new Choco(savebuffer, filesize);
+				
+				if (filesize == Choco.PSXSIZE) //PSX
+				{
 					versiontext.Text = "PSX";
 					save_but.Enabled = true;
 					
 					load_data();
+				}
+				else //PC
+				{
+					var process = System.Diagnostics.Process.Start("lzs.exe","-d "+path+" .tempfile");
+					process.WaitForExit();
+					path = ".tempfile";
+					FileIO.load_file(ref savebuffer, ref path, null);
+					
+					save = new Choco(savebuffer);
+					versiontext.Text = "PC";
+					save_but.Enabled = true;
+					load_data();
+				}
 				
-			}else{
+			}
+			else
+			{
 				MessageBox.Show("Invalid file.");
 				savegamename.Text = "";
 				save_but.Enabled = false;
@@ -78,7 +109,19 @@ namespace ChocoEdit
 		void Save_butClick(object sender, EventArgs e)
 		{
 			save_data();
-			FileIO.save_file(save.Data, mcsfilter);
+			if (save.Data.Length == Choco.PSXSIZE)
+			{
+				FileIO.save_file(save.Data, mcsfilter);
+			}
+			else
+			{
+				FileIO.write_file(save.Data, ".tempfile");
+				var process = System.Diagnostics.Process.Start("lzs.exe","-c .tempfile"+" .tempfile2");
+				process.WaitForExit();
+				string path = ".tempfile2";
+				FileIO.load_file(ref savebuffer, ref path, null);
+				FileIO.save_file(savebuffer, chocorpgfilter);
+			}
 		}
 		void SavegamenameTextChanged(object sender, EventArgs e)
 		{
@@ -86,7 +129,9 @@ namespace ChocoEdit
 		}
 		void AboutClick(object sender, EventArgs e)
 		{
-			MessageBox.Show("Chocobo World Editor 0.1 by suloku");
+			MessageBox.Show("Chocobo World Editor 0.1 by suloku"
+			                + "\n\nThanks to:\n- Ortew Lant for his awesome Chocobo World guide and help with some offsets back in 2013.\n- Ficedula for his LZS (de)compressor."
+			               );
 		}
 		void load_data()
 		{

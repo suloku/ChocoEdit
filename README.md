@@ -1,7 +1,7 @@
 # ChocoEdit
-A Chocobo World (Final Fantasy VIII minigame) savegame editor for PSX (PC support planned)
+A Chocobo World (Final Fantasy VIII minigame) savegame editor for PSX and PC (CHOCORPG file)
 
-Works with "PSXGameEdit single save" (*.mcs) savegames. I recommend MemcardRex 1.8 by Shendo to handle all PSX save file formats: http://shendosoft.blogspot.com.es/2014/01/memcardrex-18-released.html
+Works with "PSXGameEdit single save" (*.mcs) savegames, CHOCORPG and CHOCORPG.ff8 savefiles. I recommend MemcardRex 1.8 by Shendo to handle all PSX save file formats: http://shendosoft.blogspot.com.es/2014/01/memcardrex-18-released.html
 
 Editing Features:
 - Associate Chocobo World savegame to a different Final Fantasy VIII savefile (*).
@@ -17,13 +17,18 @@ Editing Features:
 
 Note: the game has two savegames (current save and backup save), the program loads and modifies the most recent one.
 
-Planned features:
-- Support for PC version.
+::::::::::
+Changelog:
+::::::::::
+
+0.2 12 July 2016
+- Added PC savegame support using Ficedula's FFLZS v1.20 for (de)compression. The exe file is embedded for convenience.
 
 ::::::
 Thanks
 ::::::
 Ortew Lant for his awesome Chocobo World guide and help with some offsets back in 2013.
+Ficedula for his LZS (de)compressor.
 
 ----------------------------------
 suloku 2016

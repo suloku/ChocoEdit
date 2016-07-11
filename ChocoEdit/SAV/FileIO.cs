@@ -104,5 +104,14 @@ namespace ChocoEdit
 		            MessageBox.Show("File Saved.", "Save file");
 	            }
 			}
+			public static void write_file(byte[] buffer, string path)
+			{
+				if (buffer == null) return;
+	            System.IO.FileStream saveFile;
+		        saveFile = new FileStream(path, FileMode.Create);            
+		        //Write file
+		        saveFile.Write(buffer, 0, buffer.Length);
+		        saveFile.Close();
+			}
 	}
 }

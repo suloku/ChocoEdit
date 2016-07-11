@@ -23,12 +23,15 @@ namespace ChocoEdit
 	/// </summary>
 	public class Choco
 	{
-			public static int SIZE = 57472;
+			public static int PSXSIZE = 57472;
 	        public byte[] Data;
-	        public Choco(byte[] data = null)
+	        public Choco(byte[] data = null, int size = 0)
 	        {
-	            Data = data ?? new byte[SIZE];
-	            get_current_save();
+	            Data = data ?? new byte[size];
+	            if (size == PSXSIZE)
+	            	get_current_save();
+	            else //CHOCORPG Uncompressed
+	            	save_offset = 0x02;
 	        }
 	        public byte[] getData(int Offset, int Length)
 	        {
