@@ -87,9 +87,10 @@ namespace ChocoEdit
 				}
 				else //PC
 				{
-					var process = System.Diagnostics.Process.Start("lzs.exe","-d "+path+" .tempfile");
+					var process = System.Diagnostics.Process.Start(Path.Combine(Directory.GetCurrentDirectory(),"lzs.exe")," -d "+path+" "+Path.Combine(Directory.GetCurrentDirectory(),".tempfile"));
+					//MessageBox.Show(Path.Combine(Directory.GetCurrentDirectory(),"lzs.exe")+" -d "+Path.Combine(Directory.GetCurrentDirectory(),".tempfile"));
 					process.WaitForExit();
-					path = ".tempfile";
+					path = Path.Combine(Directory.GetCurrentDirectory(),".tempfile");
 					FileIO.load_file(ref savebuffer, ref path, null);
 					
 					save = new Choco(savebuffer);
@@ -115,10 +116,10 @@ namespace ChocoEdit
 			}
 			else
 			{
-				FileIO.write_file(save.Data, ".tempfile");
-				var process = System.Diagnostics.Process.Start("lzs.exe","-c .tempfile"+" .tempfile2");
+				FileIO.write_file(save.Data, Path.Combine(Directory.GetCurrentDirectory(),".tempfile"));
+				var process = System.Diagnostics.Process.Start(Path.Combine(Directory.GetCurrentDirectory(),"lzs.exe")," -c "+Path.Combine(Directory.GetCurrentDirectory(),".tempfile")+" "+Path.Combine(Directory.GetCurrentDirectory(),".tempfile2"));
 				process.WaitForExit();
-				string path = ".tempfile2";
+				string path = Path.Combine(Directory.GetCurrentDirectory(),".tempfile2");
 				FileIO.load_file(ref savebuffer, ref path, null);
 				FileIO.save_file(savebuffer, chocorpgfilter);
 			}
@@ -129,7 +130,7 @@ namespace ChocoEdit
 		}
 		void AboutClick(object sender, EventArgs e)
 		{
-			MessageBox.Show("Chocobo World Editor 0.1 by suloku"
+			MessageBox.Show("Chocobo World Editor 0.2 by suloku"
 			                + "\n\nThanks to:\n- Ortew Lant for his awesome Chocobo World guide and help with some offsets back in 2013.\n- Ficedula for his LZS (de)compressor."
 			               );
 		}
