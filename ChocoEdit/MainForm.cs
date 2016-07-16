@@ -47,7 +47,7 @@ namespace ChocoEdit
 			//
 		}
 		public string loadfilter = "PSXGameEdit single save or Chocorpg PC file|*.mcs;CHOCORPG;*.ff8|All Files (*.*)|*.*";
-		public string mcsfilter = "PSXGameEdit single save|*.mcs||All Files (*.*)|*.*";
+		public string mcsfilter = "PSXGameEdit single save|*.mcs|All Files (*.*)|*.*";
 		public string chocorpgfilter = "CHOCORPG FF8 PC save file|CHOCORPG;*.ff8|All Files (*.*)|*.*";
 		public byte[] savebuffer;
 		public byte[] ff8buffer;
@@ -82,6 +82,7 @@ namespace ChocoEdit
 				{
 					versiontext.Text = "PSX";
 					save_but.Enabled = true;
+					ff8id_set.Enabled = true;
 					
 					load_data();
 				}
@@ -105,6 +106,7 @@ namespace ChocoEdit
 				MessageBox.Show("Invalid file.");
 				savegamename.Text = "";
 				save_but.Enabled = false;
+				ff8id_set.Enabled = false;
 			}
 		}
 		void Save_butClick(object sender, EventArgs e)
@@ -130,7 +132,7 @@ namespace ChocoEdit
 		}
 		void AboutClick(object sender, EventArgs e)
 		{
-			MessageBox.Show("Chocobo World Editor 0.2 by suloku"
+			MessageBox.Show("Chocobo World Editor 0.2a by suloku"
 			                + "\n\nThanks to:\n- Ortew Lant for his awesome Chocobo World guide and help with some offsets back in 2013.\n- Ficedula for his LZS (de)compressor."
 			               );
 		}

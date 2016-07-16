@@ -21,6 +21,10 @@ Note: the game has two savegames (current save and backup save), the program loa
 Changelog:
 ::::::::::
 
+0.2a 16 July 2016
+- Small bug prevented loading ID from FF8 PSX savegame.
+- Disable "load from FF8" button when there's no save and for PC saves.
+
 0.2 12 July 2016
 - Added PC savegame support using Ficedula's FFLZS v1.20 for (de)compression. The exe file is embedded for convenience.
 

@@ -196,6 +196,7 @@ namespace ChocoEdit
 			// 
 			// ff8id_set
 			// 
+			this.ff8id_set.Enabled = false;
 			this.ff8id_set.Location = new System.Drawing.Point(400, 68);
 			this.ff8id_set.Name = "ff8id_set";
 			this.ff8id_set.Size = new System.Drawing.Size(138, 22);
@@ -652,7 +653,7 @@ namespace ChocoEdit
 			this.Controls.Add(this.savegamename);
 			this.Controls.Add(this.loadsave_but);
 			this.Name = "MainForm";
-			this.Text = "Chocobo World Editor 0.2 by suloku";
+			this.Text = "Chocobo World Editor 0.2a by suloku";
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainScreenDragDrop);
 			this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainScreenDragEnter);
