@@ -17,6 +17,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
 using System.Resources;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace ChocoEdit
 {
@@ -88,9 +90,22 @@ namespace ChocoEdit
 				}
 				else //PC
 				{
-					var process = System.Diagnostics.Process.Start(Path.Combine(Directory.GetCurrentDirectory(),"lzs.exe")," -d "+path+" "+Path.Combine(Directory.GetCurrentDirectory(),".tempfile"));
-					//MessageBox.Show(Path.Combine(Directory.GetCurrentDirectory(),"lzs.exe")+" -d "+Path.Combine(Directory.GetCurrentDirectory(),".tempfile"));
+					
+					string pathLZS = Path.Combine(Directory.GetCurrentDirectory(),"lzs.exe");
+					string pathTempfile = Path.Combine(Directory.GetCurrentDirectory(),".tempfile");
+					
+					//Cleanup so we don't load a previous savefile if some error occurs
+					File.Delete(pathTempfile);
+					
+					//Decompress
+					ProcessStartInfo startLZS = new ProcessStartInfo(pathLZS);
+					startLZS.WindowStyle = ProcessWindowStyle.Normal;
+					
+					startLZS.Arguments = "-d \""+path+"\" \""+pathTempfile+"\"";
+					var process = Process.Start(startLZS);
 					process.WaitForExit();
+					//
+					
 					path = Path.Combine(Directory.GetCurrentDirectory(),".tempfile");
 					FileIO.load_file(ref savebuffer, ref path, null);
 					
@@ -119,11 +134,25 @@ namespace ChocoEdit
 			else
 			{
 				FileIO.write_file(save.Data, Path.Combine(Directory.GetCurrentDirectory(),".tempfile"));
-				var process = System.Diagnostics.Process.Start(Path.Combine(Directory.GetCurrentDirectory(),"lzs.exe")," -c "+Path.Combine(Directory.GetCurrentDirectory(),".tempfile")+" "+Path.Combine(Directory.GetCurrentDirectory(),".tempfile2"));
+				
+				string pathLZS = Path.Combine(Directory.GetCurrentDirectory(),"lzs.exe");
+				string pathTempfile = Path.Combine(Directory.GetCurrentDirectory(),".tempfile");
+				string pathTempfile2 = Path.Combine(Directory.GetCurrentDirectory(),".tempfile2");
+					
+				//Compress
+				ProcessStartInfo startLZS = new ProcessStartInfo(pathLZS);
+				startLZS.WindowStyle = ProcessWindowStyle.Normal;
+					
+				startLZS.Arguments = "-c \""+pathTempfile+"\" \""+pathTempfile2+"\"";
+				var process = Process.Start(startLZS);
 				process.WaitForExit();
+				//
+				
 				string path = Path.Combine(Directory.GetCurrentDirectory(),".tempfile2");
 				FileIO.load_file(ref savebuffer, ref path, null);
 				FileIO.save_file(savebuffer, chocorpgfilter);
+				//Remove .tempfile2 after we saved
+				File.Delete(path);
 			}
 		}
 		void SavegamenameTextChanged(object sender, EventArgs e)
@@ -132,14 +161,23 @@ namespace ChocoEdit
 		}
 		void AboutClick(object sender, EventArgs e)
 		{
-			MessageBox.Show("Chocobo World Editor 0.2a by suloku"
+			MessageBox.Show("Chocobo World Editor 0.2b by suloku"
 			                + "\n\nThanks to:\n- Ortew Lant for his awesome Chocobo World guide and help with some offsets back in 2013.\n- Ficedula for his LZS (de)compressor."
 			               );
 		}
 		void load_data()
 		{
-			hp_max.Value = save.HP_max;
-			hp_curr.Value = save.HP_cur;
+			if (save.HP_max >99)
+				hp_max.Value = 99;
+			else if (save.HP_max <6)
+				hp_max.Value = 6;
+			else
+				hp_max.Value = save.HP_max;
+			
+			if (save.HP_cur >99)
+				hp_curr.Value = 99;
+			else
+				hp_curr.Value = save.HP_cur;
 			
 			level.Value = save.level;
 			rank.Value = save.rank;
@@ -232,8 +270,9 @@ namespace ChocoEdit
 				"\n--02-----35-----9898-------4%--10%--46%--40%-----8---All-digits-the-same"+
 				"\n--03-----34-----9888-------3%--10%--37%--50%-----9---Ending-in-00"+
 				"\n--04-----33-----9698-------2%--10%--28%--60%-----9---Ending-in-77"+
-				"\n--05-----32-----9698-------0%?--5%--25%--70%----90---Ending-in-7"+
+				"\n--05-----32-----9698-------1%---5%--25%--70%----90---Ending-in-7"+
 				"\n--06-----31-----9698?------0%---5%--15%--80%---880---Any-other-number"+
+				"\n\n In PC the probability is always A-3% B-10% C-37% D-50%"+
 				"\n\nMax. HP is automatically set when you advance a level (so even if it is set to 99, after level up it will be set depending on rank)"
 			);
 		}

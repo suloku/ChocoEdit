@@ -218,27 +218,27 @@ namespace ChocoEdit
 			// 
 			this.level.Location = new System.Drawing.Point(101, 114);
 			this.level.Minimum = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+									1,
+									0,
+									0,
+									0});
 			this.level.Name = "level";
 			this.level.Size = new System.Drawing.Size(44, 20);
 			this.level.TabIndex = 18;
 			this.level.Value = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+									1,
+									0,
+									0,
+									0});
 			// 
 			// rank
 			// 
 			this.rank.Location = new System.Drawing.Point(58, 19);
 			this.rank.Maximum = new decimal(new int[] {
-			6,
-			0,
-			0,
-			0});
+									6,
+									0,
+									0,
+									0});
 			this.rank.Name = "rank";
 			this.rank.Size = new System.Drawing.Size(44, 20);
 			this.rank.TabIndex = 19;
@@ -247,10 +247,10 @@ namespace ChocoEdit
 			// 
 			this.item_a.Location = new System.Drawing.Point(22, 35);
 			this.item_a.Maximum = new decimal(new int[] {
-			99,
-			0,
-			0,
-			0});
+									99,
+									0,
+									0,
+									0});
 			this.item_a.Name = "item_a";
 			this.item_a.Size = new System.Drawing.Size(44, 20);
 			this.item_a.TabIndex = 20;
@@ -259,10 +259,10 @@ namespace ChocoEdit
 			// 
 			this.item_b.Location = new System.Drawing.Point(78, 35);
 			this.item_b.Maximum = new decimal(new int[] {
-			99,
-			0,
-			0,
-			0});
+									99,
+									0,
+									0,
+									0});
 			this.item_b.Name = "item_b";
 			this.item_b.Size = new System.Drawing.Size(44, 20);
 			this.item_b.TabIndex = 21;
@@ -271,10 +271,10 @@ namespace ChocoEdit
 			// 
 			this.item_d.Location = new System.Drawing.Point(78, 77);
 			this.item_d.Maximum = new decimal(new int[] {
-			99,
-			0,
-			0,
-			0});
+									99,
+									0,
+									0,
+									0});
 			this.item_d.Name = "item_d";
 			this.item_d.Size = new System.Drawing.Size(44, 20);
 			this.item_d.TabIndex = 22;
@@ -283,10 +283,10 @@ namespace ChocoEdit
 			// 
 			this.item_c.Location = new System.Drawing.Point(22, 77);
 			this.item_c.Maximum = new decimal(new int[] {
-			99,
-			0,
-			0,
-			0});
+									99,
+									0,
+									0,
+									0});
 			this.item_c.Name = "item_c";
 			this.item_c.Size = new System.Drawing.Size(44, 20);
 			this.item_c.TabIndex = 23;
@@ -361,46 +361,46 @@ namespace ChocoEdit
 			// 
 			this.hp_max.Location = new System.Drawing.Point(57, 45);
 			this.hp_max.Maximum = new decimal(new int[] {
-			41,
-			0,
-			0,
-			0});
+									99,
+									0,
+									0,
+									0});
 			this.hp_max.Minimum = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+									6,
+									0,
+									0,
+									0});
 			this.hp_max.Name = "hp_max";
 			this.hp_max.Size = new System.Drawing.Size(44, 20);
 			this.hp_max.TabIndex = 31;
 			this.hp_max.Value = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+									6,
+									0,
+									0,
+									0});
 			this.hp_max.ValueChanged += new System.EventHandler(this.Hp_maxValueChanged);
 			// 
 			// hp_curr
 			// 
 			this.hp_curr.Location = new System.Drawing.Point(57, 19);
 			this.hp_curr.Maximum = new decimal(new int[] {
-			41,
-			0,
-			0,
-			0});
+									99,
+									0,
+									0,
+									0});
 			this.hp_curr.Minimum = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+									1,
+									0,
+									0,
+									0});
 			this.hp_curr.Name = "hp_curr";
 			this.hp_curr.Size = new System.Drawing.Size(44, 20);
 			this.hp_curr.TabIndex = 29;
 			this.hp_curr.Value = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+									1,
+									0,
+									0,
+									0});
 			this.hp_curr.ValueChanged += new System.EventHandler(this.Hp_currValueChanged);
 			// 
 			// label7
@@ -447,10 +447,10 @@ namespace ChocoEdit
 			// 
 			this.ID.Location = new System.Drawing.Point(58, 45);
 			this.ID.Maximum = new decimal(new int[] {
-			999,
-			0,
-			0,
-			0});
+									999,
+									0,
+									0,
+									0});
 			this.ID.Name = "ID";
 			this.ID.Size = new System.Drawing.Size(44, 20);
 			this.ID.TabIndex = 25;
@@ -487,10 +487,10 @@ namespace ChocoEdit
 			// 
 			this.powerups.Location = new System.Drawing.Point(100, 140);
 			this.powerups.Maximum = new decimal(new int[] {
-			3,
-			0,
-			0,
-			0});
+									3,
+									0,
+									0,
+									0});
 			this.powerups.Name = "powerups";
 			this.powerups.Size = new System.Drawing.Size(44, 20);
 			this.powerups.TabIndex = 31;
@@ -610,10 +610,10 @@ namespace ChocoEdit
 			// 
 			this.weapon.Location = new System.Drawing.Point(100, 166);
 			this.weapon.Maximum = new decimal(new int[] {
-			9999,
-			0,
-			0,
-			0});
+									9999,
+									0,
+									0,
+									0});
 			this.weapon.Name = "weapon";
 			this.weapon.Size = new System.Drawing.Size(45, 20);
 			this.weapon.TabIndex = 27;
@@ -674,7 +674,6 @@ namespace ChocoEdit
 			((System.ComponentModel.ISupportInitialize)(this.weapon)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
-
 		}
 	}
 }
