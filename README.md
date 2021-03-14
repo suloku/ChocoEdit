@@ -3,6 +3,9 @@ A Chocobo World (Final Fantasy VIII minigame) savegame editor for PSX and PC (CH
 
 Works with "PSXGameEdit single save" (*.mcs) savegames, CHOCORPG and CHOCORPG.ff8 savefiles. I recommend MemcardRex 1.8 by Shendo to handle all PSX save file formats: http://shendosoft.blogspot.com.es/2014/01/memcardrex-18-released.html
 
+Check out this amazing guide (in spanish though):
+https://baseavalancha.com/2020/03/25/guia-chocobo-world-final-fantasy-viii-by-ortew-lant/
+
 Editing Features:
 - Associate Chocobo World savegame to a different Final Fantasy VIII savefile (*).
 - Edit current level.
@@ -20,6 +23,11 @@ Note: the game has two savegames (current save and backup save), the program loa
 ::::::::::
 Changelog:
 ::::::::::
+
+0.2b 14 March 2021
+- Reworked lzs.exe calling which failed when path had spaces on it.
+- Adjusted max HP and current HP max and min values to allow range 6-99 for max HP and 1-99 for current HP (even though leveling up resets to maximum 41).
+
 
 0.2a 16 July 2016
 - Small bug prevented loading ID from FF8 PSX savegame.
