@@ -653,7 +653,7 @@ namespace ChocoEdit
 			this.Controls.Add(this.savegamename);
 			this.Controls.Add(this.loadsave_but);
 			this.Name = "MainForm";
-			this.Text = "Chocobo World Editor 0.2b by suloku";
+			this.Text = "Chocobo World Editor 0.2c by suloku";
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainScreenDragDrop);
 			this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainScreenDragEnter);

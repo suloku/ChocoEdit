@@ -30,6 +30,7 @@ namespace ChocoEdit
 
 		public MainForm()
 		{
+			AppDomain.CurrentDomain.ProcessExit += new EventHandler (OnProcessExit); 
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
@@ -69,8 +70,12 @@ namespace ChocoEdit
 		{
 			load_savegame(null);
 		}
+		public static int compressor = 0;//0 lzs.exe, 1 qt-lzs.exe and unlzs.exe
+		public static string pathTempfile = null;
+		public static bool isCompressed = true;
 		void load_savegame(string filepath)
 		{
+			
 			string path = filepath;
 			int filesize = FileIO.load_file(ref savebuffer, ref path, loadfilter);
 			versiontext.Text = "";
@@ -90,29 +95,69 @@ namespace ChocoEdit
 				}
 				else //PC
 				{
+					//Decompress if needed
+					if(save.isLzs == true)
+					{
+						isCompressed = true;
+						versiontext.Text = "PC";
+						string pathLZS;
+						
+						if (compressor == 0)//use lzs.exe
+						{
 					
-					string pathLZS = Path.Combine(Directory.GetCurrentDirectory(),"lzs.exe");
-					string pathTempfile = Path.Combine(Directory.GetCurrentDirectory(),".tempfile");
-					
-					//Cleanup so we don't load a previous savefile if some error occurs
-					File.Delete(pathTempfile);
-					
-					//Decompress
-					ProcessStartInfo startLZS = new ProcessStartInfo(pathLZS);
-					startLZS.WindowStyle = ProcessWindowStyle.Normal;
-					
-					startLZS.Arguments = "-d \""+path+"\" \""+pathTempfile+"\"";
-					var process = Process.Start(startLZS);
-					process.WaitForExit();
-					//
-					
-					path = Path.Combine(Directory.GetCurrentDirectory(),".tempfile");
+							pathLZS = Path.Combine(Directory.GetCurrentDirectory(),"lzs.exe");
+							pathTempfile = Path.Combine(Directory.GetCurrentDirectory(),"tempfile.ff8");
+							
+							//Cleanup so we don't load a previous savefile if some error occurs
+							if (File.Exists(pathTempfile)) File.Delete(pathTempfile);
+							
+							//Decompress
+							ProcessStartInfo startLZS = new ProcessStartInfo(pathLZS);
+							startLZS.WindowStyle = ProcessWindowStyle.Hidden;
+							
+							startLZS.Arguments = "-d \""+path+"\" \""+pathTempfile+"\"";
+							var process = Process.Start(startLZS);
+							process.WaitForExit();
+							//
+							path = Path.Combine(Directory.GetCurrentDirectory(),"tempfile.ff8");
+						}
+						else if (compressor == 1)//Use qt-lzs
+						{
+							//If we are loading a new compressed file, delete previous decompressed one
+							if (pathTempfile != null)
+								if (File.Exists(pathTempfile)) File.Delete(pathTempfile);
+							
+							pathLZS = "\"" + Path.Combine(Directory.GetCurrentDirectory(), "qt-lzs\\unlzs.exe") + "\"";
+							pathTempfile = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "qt-lzs"), Path.GetFileName(path) + ".dec");
+
+							//Cleanup so we don't load a previous decomp savefile if some error occurs
+							if (File.Exists(pathTempfile)) File.Delete(pathTempfile);
+							
+							//Decompress
+							ProcessStartInfo startLZS = new ProcessStartInfo(pathLZS);
+							startLZS.WindowStyle = ProcessWindowStyle.Hidden;
+							
+							startLZS.Arguments = "\""+path+"\" "+"\""+Path.Combine(Directory.GetCurrentDirectory(),"qt-lzs")+"\"";
+							var process = Process.Start(startLZS);
+							process.WaitForExit();
+							//
+							
+							path = pathTempfile;
+						}
+					}
+					else
+					{
+						isCompressed = false;
+						versiontext.Text = "PC (uncompressed)";
+					}
+
 					FileIO.load_file(ref savebuffer, ref path, null);
-					
+
 					save = new Choco(savebuffer);
-					versiontext.Text = "PC";
 					save_but.Enabled = true;
 					load_data();
+					//Remove *.dec file
+					if (File.Exists(path)) File.Delete(path);
 				}
 				
 			}
@@ -133,26 +178,65 @@ namespace ChocoEdit
 			}
 			else
 			{
-				FileIO.write_file(save.Data, Path.Combine(Directory.GetCurrentDirectory(),".tempfile"));
-				
-				string pathLZS = Path.Combine(Directory.GetCurrentDirectory(),"lzs.exe");
-				string pathTempfile = Path.Combine(Directory.GetCurrentDirectory(),".tempfile");
-				string pathTempfile2 = Path.Combine(Directory.GetCurrentDirectory(),".tempfile2");
-					
-				//Compress
-				ProcessStartInfo startLZS = new ProcessStartInfo(pathLZS);
-				startLZS.WindowStyle = ProcessWindowStyle.Normal;
-					
-				startLZS.Arguments = "-c \""+pathTempfile+"\" \""+pathTempfile2+"\"";
-				var process = Process.Start(startLZS);
-				process.WaitForExit();
-				//
-				
-				string path = Path.Combine(Directory.GetCurrentDirectory(),".tempfile2");
-				FileIO.load_file(ref savebuffer, ref path, null);
-				FileIO.save_file(savebuffer, chocorpgfilter);
-				//Remove .tempfile2 after we saved
-				File.Delete(path);
+				string pathLZS;
+				string pathTempfile2;
+				string path;
+				if (isCompressed == true) //Recompress
+				{
+					if (compressor == 0) //lzs.exe
+					{
+						//Write edited data to temp file we will be compressing
+						FileIO.write_file(save.Data, Path.Combine(Directory.GetCurrentDirectory(),"tempfile.ff8"));
+						
+						pathLZS = Path.Combine(Directory.GetCurrentDirectory(),"lzs.exe");
+						pathTempfile = Path.Combine(Directory.GetCurrentDirectory(),"tempfile.ff8");
+						pathTempfile2 = Path.Combine(Directory.GetCurrentDirectory(),"tempfle2.ff8");
+							
+						//Compress
+						ProcessStartInfo startLZS = new ProcessStartInfo(pathLZS);
+						startLZS.WindowStyle = ProcessWindowStyle.Hidden;
+							
+						startLZS.Arguments = "-c \""+pathTempfile+"\" \""+pathTempfile2+"\"";
+						var process = Process.Start(startLZS);
+						process.WaitForExit();
+						//
+						
+						path = Path.Combine(Directory.GetCurrentDirectory(),"tempfle2.ff8");
+						FileIO.load_file(ref savebuffer, ref path, null);
+						FileIO.save_file(savebuffer, chocorpgfilter);
+						//Remove tempfl2.ff8 after we saved
+						if (File.Exists(path)) File.Delete(path);
+					}
+					else if (compressor == 1) //qt-lzs.exe
+					{
+						//Write edited data to temp file we will be compressing
+						FileIO.write_file(save.Data, Path.Combine(Directory.GetCurrentDirectory(),"tempfile.ff8"));
+						
+						pathLZS = "\"" + Path.Combine(Directory.GetCurrentDirectory(), "qt-lzs\\lzs.exe") + "\"";
+						string pathTempSave = Path.Combine(Directory.GetCurrentDirectory(),"tempfile.ff8");
+							
+						//Compress
+						ProcessStartInfo startLZS = new ProcessStartInfo(pathLZS);
+						startLZS.WindowStyle = ProcessWindowStyle.Hidden;
+							
+						startLZS.Arguments = "\""+pathTempSave+"\" "+"\""+Directory.GetCurrentDirectory()+"\"";
+						var process = Process.Start(startLZS);
+						process.WaitForExit();
+						//
+						
+						//Remove temp uncompressed data
+						if (File.Exists(pathTempSave)) File.Delete(pathTempSave);
+						
+						path = Path.Combine(Directory.GetCurrentDirectory(),"tempfile.ff8.lzs");
+						FileIO.load_file(ref savebuffer, ref path, null);
+						FileIO.save_file(savebuffer, chocorpgfilter);
+						
+						//Remove .lzs after we saved
+						if (File.Exists(path)) File.Delete(path);
+					}
+				}
+				else
+					FileIO.save_file(savebuffer, chocorpgfilter);
 			}
 		}
 		void SavegamenameTextChanged(object sender, EventArgs e)
@@ -161,7 +245,7 @@ namespace ChocoEdit
 		}
 		void AboutClick(object sender, EventArgs e)
 		{
-			MessageBox.Show("Chocobo World Editor 0.2b by suloku"
+			MessageBox.Show("Chocobo World Editor 0.2c by suloku"
 			                + "\n\nThanks to:\n- Ortew Lant for his awesome Chocobo World guide and help with some offsets back in 2013.\n- Ficedula for his LZS (de)compressor."
 			               );
 		}
@@ -288,5 +372,12 @@ namespace ChocoEdit
 		{
 	
 		}
+ 
+		static void OnProcessExit (object sender, EventArgs e)
+	    {
+			//Remove tempfile.ff8 / *.dec when closing
+			if (File.Exists(pathTempfile)) File.Delete(pathTempfile);
+			if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(),"tempfile.ff8"))) File.Delete(Path.Combine(Directory.GetCurrentDirectory(),"tempfile.ff8"));
+	    }
 	}
 }

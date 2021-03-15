@@ -24,14 +24,22 @@ namespace ChocoEdit
 	public class Choco
 	{
 			public static int PSXSIZE = 57472;
+			public static int PCHEADER = 0xFF08;
+			public bool isLzs = true;
 	        public byte[] Data;
 	        public Choco(byte[] data = null, int size = 0)
 	        {
 	            Data = data ?? new byte[size];
 	            if (size == PSXSIZE)
 	            	get_current_save();
-	            else //CHOCORPG Uncompressed
-	            	save_offset = 0x02;
+	            else //CHOCORPG from PC
+	            {
+	            	if (Data[0] == 0xFF && Data[1] == 0x08) //CHOCORPG Uncompressed
+	            		isLzs = false;
+	            	else
+	            		isLzs = true;
+	            	save_offset = 0x02;//Skip 0xFF08 header
+	            }
 	        }
 	        public byte[] getData(int Offset, int Length)
 	        {
@@ -44,6 +52,7 @@ namespace ChocoEdit
 	        
 	        private int save_offset = 0x280;
 	        
+	        //Determines which of the two savegames in the psx version is the most recen one
 	        private void get_current_save()
 	        {
 	        	if (BitConverter.ToUInt32(Data, 0x380+8) > BitConverter.ToUInt32(Data, 0x280+8) )
